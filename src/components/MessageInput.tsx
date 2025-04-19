@@ -15,7 +15,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
   };
 
   return (
-    <div className="border-2 border-[#D1D1D1] m-10 rounded-3xl">
+    <div className="border-2 border-[#D1D1D1] mb-10 rounded-3xl">
       <div className="relative  flex border-8 border-[#F4F4F4] rounded-3xl justify-center items-center ">
         <input
           type="text"

@@ -96,7 +96,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className=" flex h-screen  flex-col justify-center items-center bg-white ">
+    <div className=" flex h-screen flex-col justify-center items-center bg-white overflow-hidden">
       <div className="w-full xl:w-[80%] 2xl:w-[70%]"> 
         <div
           className="flex-1 overflow-hidden p-4"
