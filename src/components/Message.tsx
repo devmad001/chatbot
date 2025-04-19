@@ -32,7 +32,7 @@ const Message: React.FC<MessageProps> = ({
       >
         {isChart ? <VerticalBarChart /> : <p className="mb-2">{text}</p>}
         {isList ? <SynergyMetrics metrics={[]} /> : null}
-        {isModal && <Modal imageUrl="/Group3.png" />}
+        {isModal && <Modal imageUrl="/Group3.png" title="Synergy Metrics" />}
       </div>
     </div>
   );
