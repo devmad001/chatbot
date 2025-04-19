@@ -7,19 +7,20 @@ type ModalProps = {
 
 const Modal: React.FC<ModalProps> = ({ imageUrl, title }) => {
   return (
-    <div className="flex items-center shadow-lg w-[50%] p-4 bg-[#F6F6F8] rounded-lg  hover:shadow-md transition-shadow">
+    <div className="flex items-center shadow-lg p-4 bg-[#F6F6F8] rounded-lg hover:shadow-md transition-shadow border border-gray-200 min-w-fit w-fit">
       <img src={imageUrl} alt={title} className="w-32 h-30 rounded" />
       <div className="ml-4 flex-grow">
         <h3 className="text-gray-800 text-[24px] font-[500]">{title}</h3>
         <div className="flex items-center space-x-4 mt-2">
-          <button className="text-gray-600 text-[18px] font-[400] hover:text-gray-900 transition-colors text-sm flex items-center">
+          <button className="text-gray-600 text-[18px] font-[400] hover:text-gray-900 transition-colors   flex items-center">
             Open in PowerPoint
           </button>
           <div className="h-6 w-px bg-gray-300"></div>
-          <button className="text-gray-600 text-[18px] font-[400] hover:text-gray-900 transition-colors text-sm flex items-center">
+          <button className="text-gray-600 text-[18px] font-[400] hover:text-gray-900 transition-colors   flex items-center">
             Download
+            <div className="w-3"></div>
             <svg
-              className="w-4 h-4 mr-1"
+              className="w-5 h-5 mr-1"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

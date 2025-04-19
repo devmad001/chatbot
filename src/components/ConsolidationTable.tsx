@@ -28,13 +28,13 @@ const ConsolidationTable: React.FC<ConsolidationTableProps> = ({}) => {
         <table className="w-full  ">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 text-center">
                 Consolidation targets
               </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 text-center">
                 Branch overlap within 3km
               </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 text-center">
                 No. of branches
               </th>
             </tr>
@@ -42,13 +42,13 @@ const ConsolidationTable: React.FC<ConsolidationTableProps> = ({}) => {
           <tbody className="divide-y divide-gray-200">
             {consolidationData.map((item, index) => (
               <tr key={index} className="hover:bg-gray-50">
-                <td className="px-6 py-4 text-sm text-gray-700">
+                <td className="px-6 py-4 text-sm text-gray-700 text-center">
                   {item.target}
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-700">
+                <td className="px-6 py-4 text-sm text-gray-700 text-center">
                   {item.branchOverlap}%
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-700">
+                <td className="px-6 py-4 text-sm text-gray-700 text-center">
                   {item.branchCount}
                 </td>
               </tr>
