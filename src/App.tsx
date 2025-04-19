@@ -7,6 +7,7 @@ type MessageType = {
   text: string;
   sender: "user" | "gpt";
   isChart?: boolean;
+  isList?: boolean;
 };
 
 const App: React.FC = () => {
@@ -23,6 +24,15 @@ const App: React.FC = () => {
         text: "Here is the chart you requested:",
         sender: "gpt",
         isChart: true,
+      };
+      setMessages((prevMessages) => [...prevMessages, gptMessage]);
+      return;
+    }
+    if (message.toLowerCase().includes("list")) {
+      const gptMessage: MessageType = {
+        text: "Here are the synergy metrics you requested:",
+        sender: "gpt",
+        isList: true,
       };
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;

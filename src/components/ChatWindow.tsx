@@ -7,6 +7,7 @@ type MessageType = {
   text: string;
   sender: "user" | "gpt";
   isChart?: boolean;
+  isList?: boolean;
 };
 
 type ChatWindowProps = {
@@ -37,7 +38,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages }) => {
   return (
     <div
       ref={containerRef}
-      className="flex flex-col m-10 space-y-4 overflow-hidden h-[calc(100vh-200px)]"
+      className="chat-window-container flex flex-col m-10 space-y-4 overflow-hidden h-[calc(100vh-200px)]"
     >
       <TransitionGroup className="flex flex-col space-y-4">
         {messages.map((msg, index) => (
@@ -51,6 +52,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages }) => {
               text={msg.text}
               sender={msg.sender}
               isChart={msg.isChart}
+              isList={msg.isList}
             />
           </CSSTransition>
         ))}
