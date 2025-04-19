@@ -15,7 +15,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
   };
 
   return (
-    <div className="relative m-10 flex justify-center items-center">
+    <div className="relative m-10 flex border-8 border-gray rounded-3xl justify-center items-center">
       <input
         type="text"
         id="prompt"
@@ -31,7 +31,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
       <button
         type="submit"
         onClick={handleSend}
-        className="absolute end-2.5 bottom-7 text-white bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center me-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+        className="absolute end-2.5 text-white bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center me-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
       <button
         type="submit"
         onClick={handleSend}
-        className="absolute end-10 bottom-7 text-black bg-white hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center me-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 border-1 border-gray-500"
+        className="absolute end-10 text-black bg-white hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center me-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 border-1 border-gray-500"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

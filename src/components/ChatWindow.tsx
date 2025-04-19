@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Message from "./Message";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./ChatWindow.css";
-
+import TreeDivisionDiagram from "./Tree";
 type MessageType = {
   text: string;
   sender: "user" | "gpt";
@@ -41,6 +41,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages }) => {
       ref={containerRef}
       className="chat-window-container flex flex-col m-10 space-y-4 overflow-hidden h-[calc(100vh-200px)]"
     >
+      <TreeDivisionDiagram />
       <TransitionGroup className="flex flex-col space-y-4">
         {messages.map((msg, index) => (
           <CSSTransition
