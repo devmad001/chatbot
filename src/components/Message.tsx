@@ -4,6 +4,8 @@ import SynergyMetrics from "./SynergyMetrics";
 import Modal from "./powerModal";
 import TreeDivisionDiagram from "./Tree";
 import ConsolidationTable from "./ConsolidationTable";
+import CitationCard from "./CitationCard";
+
 type MessageProps = {
   text: string;
   sender: "user" | "gpt";
@@ -12,6 +14,7 @@ type MessageProps = {
   isModal?: boolean;
   isTree?: boolean;
   isTable?: boolean;
+  isCitation?: boolean;
 };
 
 const Message: React.FC<MessageProps> = ({
@@ -22,6 +25,7 @@ const Message: React.FC<MessageProps> = ({
   isModal,
   isTree,
   isTable,
+  isCitation,
 }) => {
   return (
     <div
@@ -37,6 +41,16 @@ const Message: React.FC<MessageProps> = ({
         {isTree && <TreeDivisionDiagram />}
         {isModal && <Modal imageUrl="/Group3.png" title="Synergy Graph" />}
         {isTable && <ConsolidationTable />}
+        {isCitation && (
+          <CitationCard
+            citationText="The source for the value of equity"
+            value="3,600"
+            pageNumber={5}
+            presentationLink="#"
+            date="June 24th, 2019"
+            location="Paris"
+          />
+        )}
       </div>
     </div>
   );

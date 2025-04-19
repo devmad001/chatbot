@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Message from "./Message";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./ChatWindow.css";
+
 type MessageType = {
   text: string;
   sender: "user" | "gpt";
@@ -10,6 +11,7 @@ type MessageType = {
   isModal?: boolean;
   isTree?: boolean;
   isTable?: boolean;
+  isCitation?: boolean;
 };
 
 type ChatWindowProps = {
@@ -58,6 +60,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages }) => {
               isModal={msg.isModal}
               isTree={msg.isTree}
               isTable={msg.isTable}
+              isCitation={msg.isCitation}
             />
           </CSSTransition>
         ))}

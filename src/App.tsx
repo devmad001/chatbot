@@ -3,6 +3,7 @@ import ChatWindow from "./components/ChatWindow";
 import MessageInput from "./components/MessageInput";
 import ImageModal from "./components/ImageModal";
 import ConsolidationTable from "./components/ConsolidationTable";
+import CitationCard from "./components/CitationCard";
 // import "./output.css";
 
 type MessageType = {
@@ -13,6 +14,7 @@ type MessageType = {
   isModal?: boolean;
   isTree?: boolean;
   isTable?: boolean;
+  isCitation?: boolean;
 };
 
 const App: React.FC = () => {
@@ -34,6 +36,17 @@ const App: React.FC = () => {
   const handleSendMessage = async (message: string) => {
     const userMessage: MessageType = { text: message, sender: "user" };
     setMessages([...messages, userMessage]);
+
+    // Check if user typed "card"
+    if (message.toLowerCase().includes("card")) {
+      const gptMessage: MessageType = {
+        text: "",
+        sender: "gpt",
+        isCitation: true,
+      };
+      setMessages((prevMessages) => [...prevMessages, gptMessage]);
+      return;
+    }
 
     // Check if user typed "modal"
     if (message.toLowerCase().includes("modal")) {
