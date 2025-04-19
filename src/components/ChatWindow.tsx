@@ -42,7 +42,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages }) => {
   return (
     <div
       ref={containerRef}
-      className="chat-window-container flex flex-col m-10 space-y-4 overflow-hidden h-[calc(100vh-200px)]"
+      className="chat-window-container flex flex-col p-10 space-y-4 overflow-hidden h-[calc(100vh-200px)]"
     >
       <div className="flex flex-col space-y-4 h-[300px]"></div>
       <TransitionGroup className="flex flex-col space-y-4">
