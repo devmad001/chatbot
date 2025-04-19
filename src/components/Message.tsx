@@ -25,10 +25,10 @@ const Message: React.FC<MessageProps> = ({
 }) => {
   return (
     <div
-      className={`p-3 my-2 ${
+      className={`py-1 px-2 my-2 ${
         sender === "user"
-          ? "text-black bg-gray-300 rounded-2xl self-end"
-          : "bg-white rounded-2xl"
+          ? "text-black bg-gray-300 rounded-full self-end"
+          : "bg-white rounded-full"
       }`}
     >
       <div className="flex flex-col" style={{ width: "50%" }}>
