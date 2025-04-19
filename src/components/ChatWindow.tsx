@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Message from "./Message";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import "./ChatWindow.css";
 
 type MessageType = {
   text: string;
@@ -12,16 +14,48 @@ type ChatWindowProps = {
 };
 
 const ChatWindow: React.FC<ChatWindowProps> = ({ messages }) => {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    if (containerRef.current && messagesEndRef.current) {
+      const container = containerRef.current;
+      const contentHeight = container.scrollHeight;
+      const containerHeight = container.clientHeight;
+
+      // Only scroll if content height exceeds container height
+      if (contentHeight > containerHeight) {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
-    <div className="flex flex-col m-10 space-y-4">
-      {messages.map((msg, index) => (
-        <Message
-          key={index}
-          text={msg.text}
-          sender={msg.sender}
-          isChart={msg.isChart}
-        />
-      ))}
+    <div
+      ref={containerRef}
+      className="flex flex-col m-10 space-y-4 overflow-hidden h-[calc(100vh-200px)]"
+    >
+      <TransitionGroup className="flex flex-col space-y-4">
+        {messages.map((msg, index) => (
+          <CSSTransition
+            key={index}
+            timeout={300}
+            classNames="message"
+            unmountOnExit
+          >
+            <Message
+              text={msg.text}
+              sender={msg.sender}
+              isChart={msg.isChart}
+            />
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
+      <div ref={messagesEndRef} />
     </div>
   );
 };

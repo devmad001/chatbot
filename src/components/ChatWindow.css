@@ -1,0 +1,41 @@
+.message-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.message-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 600ms ease-out;
+}
+
+.message-enter-done {
+  transform: translateY(0);
+}
+
+.message-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.message-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 600ms ease-in;
+}
+
+/* Container styles */
+.flex-col {
+  position: relative;
+}
+
+/* Ensure messages are positioned correctly */
+.space-y-4 > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure smooth scrolling */
+.overflow-y-auto {
+  scroll-behavior: smooth;
+} 
