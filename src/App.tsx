@@ -10,6 +10,7 @@ type MessageType = {
   isChart?: boolean;
   isList?: boolean;
   isModal?: boolean;
+  isTree?: boolean;
 };
 
 const App: React.FC = () => {
@@ -23,6 +24,7 @@ const App: React.FC = () => {
       text: "",
       sender: "gpt",
       isModal: true,
+      isTree:false,
     };
     setMessages((prevMessages) => [...prevMessages, modalMessage]);
   };
@@ -52,6 +54,15 @@ const App: React.FC = () => {
         text: "",
         sender: "gpt",
         isList: true,
+      };
+      setMessages((prevMessages) => [...prevMessages, gptMessage]);
+      return;
+    }
+    if (message.toLowerCase().includes("tree")) {
+      const gptMessage: MessageType = {
+        text: "",
+        sender: "gpt",
+        isTree: true,
       };
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;
