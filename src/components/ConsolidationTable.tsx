@@ -1,4 +1,5 @@
 import React from "react";
+import "./ConsolidationTable.css";
 
 interface ConsolidationData {
   target: string;
@@ -15,37 +16,46 @@ const consolidationData = [
   { target: "Rieglers Bäckerei", branchOverlap: 93, branchCount: 14 },
   { target: "Bäckerei Rutz", branchOverlap: 74, branchCount: 23 },
 ];
+
 const ConsolidationTable: React.FC<ConsolidationTableProps> = ({}) => {
   return (
-    <div className="rounded-lg overflow-hidden bg-white shadow">
-      <table className="w-full">
-        <thead className="bg-gray-50">
-          <tr>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
-              Consolidation targets
-            </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
-              Branch overlap within 3km
-            </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
-              No. of branches
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200">
-          {consolidationData.map((item, index) => (
-            <tr key={index} className="hover:bg-gray-50">
-              <td className="px-6 py-4 text-sm text-gray-700">{item.target}</td>
-              <td className="px-6 py-4 text-sm text-gray-700">
-                {item.branchOverlap}%
-              </td>
-              <td className="px-6 py-4 text-sm text-gray-700">
-                {item.branchCount}
-              </td>
+    <div className="consolidation-table-container">
+      <div className="table-animation"></div>
+      <div
+        className="rounded-lg overflow-hidden bg-white shadow border border-gray-200"
+        style={{ borderRadius: "20px" }}
+      >
+        <table className="w-full  ">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                Consolidation targets
+              </th>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                Branch overlap within 3km
+              </th>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                No. of branches
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {consolidationData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 text-sm text-gray-700">
+                  {item.target}
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-700">
+                  {item.branchOverlap}%
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-700">
+                  {item.branchCount}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
