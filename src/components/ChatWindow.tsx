@@ -8,6 +8,7 @@ type MessageType = {
   sender: "user" | "gpt";
   isChart?: boolean;
   isList?: boolean;
+  isModal?: boolean;
 };
 
 type ChatWindowProps = {
@@ -53,6 +54,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages }) => {
               sender={msg.sender}
               isChart={msg.isChart}
               isList={msg.isList}
+              isModal={msg.isModal}
             />
           </CSSTransition>
         ))}
