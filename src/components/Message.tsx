@@ -29,14 +29,14 @@ const Message: React.FC<MessageProps> = ({
 }) => {
   return (
     <div
-      className={`py-1 px-2 my-2 ${
+      className={`py-1 px-2 my-2 max-w-1/2  ${
         sender === "user"
           ? "text-black bg-gray-300 rounded-full self-end"
           : "bg-white rounded-full"
       }`}
     >
-      <div className="flex flex-col" style={{ width: "50%" }}>
-        {isChart ? <VerticalBarChart /> : <p className="mb-2">{text}</p>}
+      <div className="flex flex-col px-3 py-1 justify-center w-1/2" >
+        {isChart ? <VerticalBarChart /> : <p>{text}</p>}
         {isList ? <SynergyMetrics metrics={[]} /> : null}
         {isTree && <TreeDivisionDiagram />}
         {isModal && <Modal imageUrl="/Group3.png" title="Synergy Graph" />}
