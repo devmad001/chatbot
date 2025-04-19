@@ -3,6 +3,7 @@ import VerticalBarChart from "./BarChart";
 import SynergyMetrics from "./SynergyMetrics";
 import Modal from "./powerModal";
 import TreeDivisionDiagram from "./Tree";
+import ConsolidationTable from "./ConsolidationTable";
 type MessageProps = {
   text: string;
   sender: "user" | "gpt";
@@ -10,6 +11,7 @@ type MessageProps = {
   isList?: boolean;
   isModal?: boolean;
   isTree?: boolean;
+  isTable?: boolean;
 };
 
 const Message: React.FC<MessageProps> = ({
@@ -19,6 +21,7 @@ const Message: React.FC<MessageProps> = ({
   isList,
   isModal,
   isTree,
+  isTable,
 }) => {
   return (
     <div
@@ -28,14 +31,12 @@ const Message: React.FC<MessageProps> = ({
           : "bg-white rounded-2xl"
       }`}
     >
-      <div
-        className="flex flex-col"
-        style={{ width: isModal ? "300px" : "50%" }}
-      >
+      <div className="flex flex-col" style={{ width: "50%" }}>
         {isChart ? <VerticalBarChart /> : <p className="mb-2">{text}</p>}
         {isList ? <SynergyMetrics metrics={[]} /> : null}
-        {isTree && <TreeDivisionDiagram  />}
-        {isModal && <Modal imageUrl="/Group3.png" title="Synergy Metrics" />}
+        {isTree && <TreeDivisionDiagram />}
+        {isModal && <Modal imageUrl="/Group3.png" title="Synergy Graph" />}
+        {isTable && <ConsolidationTable />}
       </div>
     </div>
   );

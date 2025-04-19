@@ -9,6 +9,7 @@ type MessageType = {
   isList?: boolean;
   isModal?: boolean;
   isTree?: boolean;
+  isTable?: boolean;
 };
 
 type ChatWindowProps = {
@@ -56,6 +57,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages }) => {
               isList={msg.isList}
               isModal={msg.isModal}
               isTree={msg.isTree}
+              isTable={msg.isTable}
             />
           </CSSTransition>
         ))}

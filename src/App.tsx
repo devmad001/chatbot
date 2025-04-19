@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ChatWindow from "./components/ChatWindow";
 import MessageInput from "./components/MessageInput";
 import ImageModal from "./components/ImageModal";
+import ConsolidationTable from "./components/ConsolidationTable";
 // import "./output.css";
 
 type MessageType = {
@@ -11,6 +12,7 @@ type MessageType = {
   isList?: boolean;
   isModal?: boolean;
   isTree?: boolean;
+  isTable?: boolean;
 };
 
 const App: React.FC = () => {
@@ -24,7 +26,7 @@ const App: React.FC = () => {
       text: "",
       sender: "gpt",
       isModal: true,
-      isTree:false,
+      isTree: false,
     };
     setMessages((prevMessages) => [...prevMessages, modalMessage]);
   };
@@ -36,6 +38,17 @@ const App: React.FC = () => {
     // Check if user typed "modal"
     if (message.toLowerCase().includes("modal")) {
       setIsModalOpen(true);
+      return;
+    }
+
+    // Check if user typed "table"
+    if (message.toLowerCase().includes("table")) {
+      const gptMessage: MessageType = {
+        text: "",
+        sender: "gpt",
+        isTable: true,
+      };
+      setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;
     }
 
