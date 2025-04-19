@@ -15,6 +15,7 @@ type MessageProps = {
   isTree?: boolean;
   isTable?: boolean;
   isCitation?: boolean;
+  onCitationLinkClick?: () => void;
 };
 
 const Message: React.FC<MessageProps> = ({
@@ -26,6 +27,7 @@ const Message: React.FC<MessageProps> = ({
   isTree,
   isTable,
   isCitation,
+  onCitationLinkClick,
 }) => {
   return (
     <div
@@ -49,6 +51,7 @@ const Message: React.FC<MessageProps> = ({
             presentationLink="#"
             date="June 24th, 2019"
             location="Paris"
+            onLinkClick={onCitationLinkClick}
           />
         )}
       </div>

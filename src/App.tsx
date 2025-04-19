@@ -4,6 +4,7 @@ import MessageInput from "./components/MessageInput";
 import ImageModal from "./components/ImageModal";
 import ConsolidationTable from "./components/ConsolidationTable";
 import CitationCard from "./components/CitationCard";
+import CardModal from "./components/CardModal";
 // import "./output.css";
 
 type MessageType = {
@@ -21,6 +22,7 @@ const App: React.FC = () => {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isCardModalOpen, setIsCardModalOpen] = useState<boolean>(false);
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -32,7 +34,12 @@ const App: React.FC = () => {
     };
     setMessages((prevMessages) => [...prevMessages, modalMessage]);
   };
-
+  const handleCardModalClose = () => {
+    setIsCardModalOpen(false);
+  };
+  const handleCitationLinkClick = () => {
+    setIsCardModalOpen(true);
+  };
   const handleSendMessage = async (message: string) => {
     const userMessage: MessageType = { text: message, sender: "user" };
     setMessages([...messages, userMessage]);
@@ -96,13 +103,16 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className=" flex h-screen flex-col justify-center items-center bg-white overflow-hidden">
-      <div className="w-full xl:w-[80%] 2xl:w-[70%]"> 
+    <div className=" flex h-screen  flex-col justify-center items-center bg-white ">
+      <div className="w-full xl:w-[80%] 2xl:w-[70%]">
         <div
           className="flex-1 overflow-hidden p-4"
           style={{ height: "calc(100vh - 100px)" }}
         >
-          <ChatWindow messages={messages} />
+          <ChatWindow
+            messages={messages}
+            onCitationLinkClick={handleCitationLinkClick}
+          />
         </div>
         {loading && (
           <div className="text-center text-gray-500">GPT is typing...</div>
@@ -115,7 +125,12 @@ const App: React.FC = () => {
           isOpen={isModalOpen}
           onClose={handleModalClose}
           imagePath="/Group3.png"
-          />
+        />
+        <CardModal
+          isOpen={isCardModalOpen}
+          onClose={handleCardModalClose}
+          imagePath="/Group3.png"
+        />
       </div>
     </div>
   );

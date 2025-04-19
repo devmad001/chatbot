@@ -16,9 +16,13 @@ type MessageType = {
 
 type ChatWindowProps = {
   messages: MessageType[];
+  onCitationLinkClick: () => void;
 };
 
-const ChatWindow: React.FC<ChatWindowProps> = ({ messages }) => {
+const ChatWindow: React.FC<ChatWindowProps> = ({
+  messages,
+  onCitationLinkClick,
+}) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -62,6 +66,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ messages }) => {
               isTree={msg.isTree}
               isTable={msg.isTable}
               isCitation={msg.isCitation}
+              onCitationLinkClick={onCitationLinkClick}
             />
           </CSSTransition>
         ))}

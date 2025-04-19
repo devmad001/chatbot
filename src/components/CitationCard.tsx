@@ -7,6 +7,7 @@ interface CitationCardProps {
   presentationLink: string;
   date: string;
   location: string;
+  onLinkClick?: () => void;
 }
 
 const CitationCard: React.FC<CitationCardProps> = ({
@@ -16,7 +17,15 @@ const CitationCard: React.FC<CitationCardProps> = ({
   presentationLink,
   date,
   location,
+  onLinkClick,
 }) => {
+  const handleLinkClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (onLinkClick) {
+      onLinkClick();
+    }
+  };
+
   return (
     <div className="max-w-2xl  p-4">
       <div className="mb-4 text-gray-800">
@@ -43,6 +52,7 @@ const CitationCard: React.FC<CitationCardProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition-colors"
+            onClick={handleLinkClick}
           >
             <span>Open Presentation</span>
             <div className="ml-2"></div>
