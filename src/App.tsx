@@ -83,25 +83,27 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-white">
-      <div
-        className="flex-1 overflow-hidden p-4"
-        style={{ height: "calc(100vh - 100px)" }}
-      >
-        <ChatWindow messages={messages} />
-      </div>
-      {loading && (
-        <div className="text-center text-gray-500">GPT is typing...</div>
-      )}
-      <div className="p-4 bg-white border-gray-300">
-        <MessageInput onSendMessage={handleSendMessage} />
-      </div>
+    <div className=" flex h-screen  flex-col justify-center items-center bg-white ">
+      <div className="w-full xl:w-[80%] 2xl:w-[70%]"> 
+        <div
+          className="flex-1 overflow-hidden p-4"
+          style={{ height: "calc(100vh - 100px)" }}
+        >
+          <ChatWindow messages={messages} />
+        </div>
+        {loading && (
+          <div className="text-center text-gray-500">GPT is typing...</div>
+        )}
+        <div className="p-4 bg-white border-gray-300">
+          <MessageInput onSendMessage={handleSendMessage} />
+        </div>
 
-      <ImageModal
-        isOpen={isModalOpen}
-        onClose={handleModalClose}
-        imagePath="/Group3.png"
-      />
+        <ImageModal
+          isOpen={isModalOpen}
+          onClose={handleModalClose}
+          imagePath="/Group3.png"
+          />
+      </div>
     </div>
   );
 };
