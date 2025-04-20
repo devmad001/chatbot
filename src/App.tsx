@@ -133,13 +133,14 @@ const App: React.FC = () => {
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;
     }
-    if (message.toLowerCase().includes("map")) {
+    if (messageType.isMap) {
       const gptMessage: MessageType = {
         text: "",
-        sender: "gpt"
+        sender: "gpt",
+        isMap: true
       };
       setIsMapModalOpen(true);
-      setMessages((prevMessages) => [...prevMessages, gptMessage]);
+      // setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;
     }
   };
