@@ -101,7 +101,7 @@ export const determineMessageType = (text: string): Partial<MessageType> => {
     };
   }
 
-  if (lowerText.includes('citation') || lowerText.includes('reference')) {
+  if (lowerText.includes('card') || lowerText.includes('reference')) {
     return {
       isCitation: true
     };
