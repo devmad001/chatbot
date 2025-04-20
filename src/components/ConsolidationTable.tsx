@@ -2,7 +2,6 @@ import React from "react";
 import "./ConsolidationTable.css";
 
 interface TableData {
-  type: string;
   columns: string[];
   rows: string[][];
 }

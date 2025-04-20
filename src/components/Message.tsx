@@ -16,6 +16,9 @@ type MessageProps = {
   isTable?: boolean;
   isCitation?: boolean;
   chartData?: any;
+  treeData?: any;
+  listData?: any;
+  tableData?: any;
   onCitationLinkClick?: () => void;
 };
 
@@ -29,6 +32,9 @@ const Message: React.FC<MessageProps> = ({
   isTable,
   isCitation,
   chartData,
+  treeData,
+  listData,
+  tableData,
   onCitationLinkClick,
 }) => {
   return (
@@ -45,58 +51,11 @@ const Message: React.FC<MessageProps> = ({
         ) : (
           <p>{text}</p>
         )}
-        {isList ? (
-          <SynergyMetrics
-            items={[
-              {
-                metric: "Footprint consolidation",
-                detail: "39% of target branches are within 10km",
-                rating: "HIGH",
-              },
-              {
-                metric: "Overhead rationalization",
-                detail: "54% of country organizations overlap",
-                rating: "HIGH",
-              },
-              {
-                metric: "IT Infrastructure savings",
-                detail: "Both firms run on Temenos platform",
-                rating: "HIGH",
-              },
-              {
-                metric: "Cross‑selling potential",
-                detail: "Adds 25 new local markets (16M consumers)",
-                rating: "MEDIUM",
-              },
-              {
-                metric: "Total synergies",
-                detail: "Above median of 18% of target revenue",
-                rating: "HIGH",
-              },
-            ]}
-          />
-        ) : null}
+        {isList ? <SynergyMetrics items={listData} /> : null}
+
         {isTree && <TreeDivisionDiagram />}
         {isModal && <Modal imageUrl="/Group3.png" title="Synergy Graph" />}
-        {isTable && (
-          <ConsolidationTable
-            data={{
-              type: "table",
-              columns: [
-                "Consolidation targets",
-                "Branch overlap within 3km",
-                "No. of branches",
-              ],
-              rows: [
-                ["Bäckerei Theurer", "100%", "19"],
-                ["Backparadies Hug", "100%", "15"],
-                ["Bäckerei Otto Schall", "94%", "31"],
-                ["Rieglers Bäckerei", "93%", "14"],
-                ["Bäckerei Rutz", "74%", "23"],
-              ],
-            }}
-          />
-        )}
+        {isTable && <ConsolidationTable data={tableData} />}
         {isCitation && (
           <CitationCard
             citationText="The source for the value of equity"
