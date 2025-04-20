@@ -106,7 +106,7 @@ const App: React.FC = () => {
     <div className=" flex h-screen flex-col justify-center items-center bg-white overflow-hidden">
       <div className="w-full xl:w-[80%] 2xl:w-[70%] h-full">
         <div
-          className="flex-1 overflow-hidden p-4"
+          className="flex-1 overflow-y-auto p-4"
           // style={{ height: "calc(100vh - 100px)" }}
         >
           <ChatWindow
