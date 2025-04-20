@@ -5,7 +5,8 @@ import Modal from "./powerModal";
 import TreeDivisionDiagram from "./Tree";
 import ConsolidationTable from "./ConsolidationTable";
 import CitationCard from "./CitationCard";
-import Map from "./MapModal";
+import Map from "./Map";
+
 type MessageProps = {
   text: string;
   sender: "user" | "gpt";
@@ -72,7 +73,7 @@ const Message: React.FC<MessageProps> = ({
             onLinkClick={onCitationLinkClick}
           />
         )}
-        {/* {isMap && <Map />} */}
+        {isMap && <Map imageUrl="/MapLeft.png" title="Detail Map" />}
       </div>
     </div>
   );

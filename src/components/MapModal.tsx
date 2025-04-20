@@ -5,11 +5,11 @@ import "./Tree.css"; // Import the CSS file for styling
 
 interface MapModalProps {
   isOpen: boolean;
-  // onClose: () => void;
+  onClose: () => void;
   // imagePath: string;
 }
 
-const MapModal: React.FC<MapModalProps> = ({ isOpen }) => {
+const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<L.Map | null>(null);
 
@@ -17,7 +17,11 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen }) => {
     type: "map",
     markers: [
       { lat: 48.14, lng: 11.58, label: "Buyer branch", color: "blue" },
-      { lat: 48.21, lng: 11.62, label: "Target branch", color: "red" }
+      { lat: 49.21, lng: 11.62, label: "Target branch", color: "red" },
+      { lat: 47.21, lng: 11.82, label: "Target branch1", color: "blue" },
+      { lat: 45.21, lng: 12.42, label: "Target branch2", color: "red" },
+      { lat: 46.21, lng: 13.62, label: "Target branch3", color: "blue" },
+      { lat: 45.71, lng: 11.62, label: "Target branch4", color: "red" }
     ],
     options: {
       zoom: 6,
@@ -27,15 +31,16 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen }) => {
 
   useEffect(() => {
     if (mapRef.current && !mapInstance.current) {
-      mapInstance.current = L.map(mapRef.current).setView(
-        [48.14, 11.58],
-        mapdata.options.zoom
-      );
+      mapInstance.current = L.map(mapRef.current, {
+        zoomControl: false,
+        attributionControl: false // Disabled the Leaflet icon in the bottom-right corner
+      }).setView([48.14, 11.58], mapdata.options.zoom);
 
       L.tileLayer(mapdata.options.tileProvider, {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution: "" // Removed the attribution text
       }).addTo(mapInstance.current);
+
+      L.control.zoom({ position: "topright" }).remove();
 
       mapdata.markers.forEach((marker) => {
         const circle = L.circleMarker([marker.lat, marker.lng], {
@@ -61,12 +66,12 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300">
-      <div className="relative w-1/2 p-4 bg-white rounded-lg shadow-lg">
+      <div className="relative w-1/2 p-4 bg-white rounded-[60px] shadow-lg">
         <div
           ref={mapRef}
-          className="w-full h-[500px] rounded-lg shadow-md"
+          className="w-full h-[500px] rounded-[60px] shadow-md"
         ></div>
-        <div className="absolute bottom-0 left-0 right-0 bg-white py-4 flex flex-col items-center rounded-b-lg">
+        <div className="absolute bottom-0 left-0 right-0 bg-white py-4 flex flex-col items-center rounded-b-[40px]">
           <div className="w-full flex flex-col">
             <div className="w-full h-4 bg-gradient-to-r from-red-500 to-green-500 rounded-full relative">
               <div className="absolute top-0 left-[70%] w-4 h-4 bg-white border border-gray-300 rounded-full shadow-md"></div>
@@ -93,7 +98,10 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen }) => {
             </div>
           </div>
           <div className="flex items-center space-x-4 mt-2 rounded-full bg-white border border-gray-300 shadow-md px-4 py-2">
-            <button className="text-gray-600 text-[18px] font-[400] hover:text-gray-900 transition-colors   flex items-center">
+            <button
+              className="text-gray-600 text-[18px] font-[400] hover:text-gray-900 transition-colors   flex items-center"
+              onClick={onClose}
+            >
               Close
             </button>
             <div className="h-6 w-px bg-gray-300"></div>

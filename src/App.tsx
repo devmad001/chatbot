@@ -45,6 +45,15 @@ const App: React.FC = () => {
   const handleCardModalClose = () => {
     setIsCardModalOpen(false);
   };
+  const handleMapModalClose = () => {
+    setIsMapModalOpen(false);
+    const modalMessage: MessageType = {
+      text: "",
+      sender: "gpt",
+      isMap: true
+    };
+    setMessages((prevMessages) => [...prevMessages, modalMessage]);
+  };
   const handleCitationLinkClick = () => {
     setIsCardModalOpen(true);
   };
@@ -127,8 +136,7 @@ const App: React.FC = () => {
     if (message.toLowerCase().includes("map")) {
       const gptMessage: MessageType = {
         text: "",
-        sender: "gpt",
-        isMap: true
+        sender: "gpt"
       };
       setIsMapModalOpen(true);
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
@@ -165,7 +173,7 @@ const App: React.FC = () => {
           onClose={handleCardModalClose}
           imagePath="/Group3.png"
         />
-        <MapModal isOpen={isMapModalOpen} />
+        <MapModal isOpen={isMapModalOpen} onClose={handleMapModalClose} />
       </div>
     </div>
   );
