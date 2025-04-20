@@ -5,11 +5,13 @@ import ImageModal from "./components/ImageModal";
 import ConsolidationTable from "./components/ConsolidationTable";
 import CitationCard from "./components/CitationCard";
 import CardModal from "./components/CardModal";
+import { determineMessageType } from "./utils/messageType";
 // import "./output.css";
 
-type MessageType = {
+export type MessageType = {
   text: string;
   sender: "user" | "gpt";
+  isText?: boolean;
   isChart?: boolean;
   isList?: boolean;
   isModal?: boolean;
@@ -45,11 +47,24 @@ const App: React.FC = () => {
     setIsCardModalOpen(true);
   };
   const handleSendMessage = async (message: string) => {
-    const userMessage: MessageType = { text: message, sender: "user" };
+    const userMessage: MessageType = {
+      text: message,
+      sender: "user",
+      isText: true,
+    };
     setMessages([...messages, userMessage]);
-
+    const messageType = determineMessageType(message);
+    if (messageType.isText) {
+      const gptMessage: MessageType = {
+        text: "adds 25 new local markets (16M consumers)",
+        sender: "gpt",
+        isText: true,
+      };
+      setMessages((prevMessages) => [...prevMessages, gptMessage]);
+      return;
+    }
     // Check if user typed "card"
-    if (message.toLowerCase().includes("card")) {
+    if (messageType.isCitation) {
       const gptMessage: MessageType = {
         text: "",
         sender: "gpt",
@@ -60,113 +75,45 @@ const App: React.FC = () => {
     }
 
     // Check if user typed "modal"
-    if (message.toLowerCase().includes("modal")) {
+    if (messageType.isModal) {
       setIsModalOpen(true);
       return;
     }
 
     // Check if user typed "table"
-    if (message.toLowerCase().includes("table")) {
-      const tableData = {
-        columns: [
-          "Consolidation targets",
-          "Branch overlap within 3km",
-          "No. of branches",
-        ],
-        rows: [
-          ["Bäckerei Theurer", "100%", "19"],
-          ["Backparadies Hug", "100%", "15"],
-          ["Bäckerei Otto Schall", "94%", "31"],
-          ["Rieglers Bäckerei", "93%", "14"],
-          ["Bäckerei Rutz", "74%", "23"],
-        ],
-      };
+    if (messageType.isTable) {
       const gptMessage: MessageType = {
         text: "",
         sender: "gpt",
         isTable: true,
-        tableData: tableData,
+        tableData: messageType.tableData,
       };
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;
     }
 
     // Check if user asked for a chart
-    if (message.toLowerCase().includes("chart")) {
-      const chartData = {
-        data: {
-          labels: [
-            "UBS/Credit",
-            "Julius Bär",
-            "EFG/BSI",
-            "Rathbones",
-            "Rothschild",
-            "ABN Amro",
-            "RBC/City National",
-          ],
-          datasets: [
-            {
-              label: "Synergy %",
-              data: [54, 35, 22, 18, 14, 13, 13],
-            },
-          ],
-        },
-        options: {
-          title: {
-            display: true,
-            text: "Total synergies vs. precedent median",
-          },
-          baseline: 18,
-        },
-      };
-
+    if (messageType.isChart) {
       const gptMessage: MessageType = {
-        text: "Here is the chart you requested:",
+        text: "",
         sender: "gpt",
         isChart: true,
-        chartData: chartData,
+        chartData: messageType.chartData,
       };
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;
     }
-    if (message.toLowerCase().includes("list")) {
-      const items = [
-        {
-          metric: "Footprint consolidation",
-          detail: "39% of target branches are within 10km",
-          rating: "HIGH",
-        },
-        {
-          metric: "Overhead rationalization",
-          detail: "54% of country organizations overlap",
-          rating: "HIGH",
-        },
-        {
-          metric: "IT Infrastructure savings",
-          detail: "Both firms run on Temenos platform",
-          rating: "HIGH",
-        },
-        {
-          metric: "Cross‑selling potential",
-          detail: "Adds 25 new local markets (16M consumers)",
-          rating: "MEDIUM",
-        },
-        {
-          metric: "Total synergies",
-          detail: "Above median of 18% of target revenue",
-          rating: "HIGH",
-        },
-      ];
+    if (messageType.isList) {
       const gptMessage: MessageType = {
         text: "",
         sender: "gpt",
         isList: true,
-        listData: items,
+        listData: messageType.listData,
       };
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;
     }
-    if (message.toLowerCase().includes("tree")) {
+    if (messageType.isTree) {
       const gptMessage: MessageType = {
         text: "",
         sender: "gpt",
