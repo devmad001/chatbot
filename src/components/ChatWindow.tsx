@@ -17,6 +17,7 @@ type MessageType = {
   listData?: any;
   tableData?: any;
   isText?: boolean;
+  isMap?: boolean;
 };
 
 type ChatWindowProps = {
@@ -26,7 +27,7 @@ type ChatWindowProps = {
 
 const ChatWindow: React.FC<ChatWindowProps> = ({
   messages,
-  onCitationLinkClick,
+  onCitationLinkClick
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -77,6 +78,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
               tableData={msg.tableData}
               isText={msg.isText}
               onCitationLinkClick={onCitationLinkClick}
+              isMap={msg.isMap}
             />
           </CSSTransition>
         ))}

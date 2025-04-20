@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ChatWindow from "./components/ChatWindow";
 import MessageInput from "./components/MessageInput";
 import ImageModal from "./components/ImageModal";
+import MapModal from "./components/MapModal";
 import ConsolidationTable from "./components/ConsolidationTable";
 import CitationCard from "./components/CitationCard";
 import CardModal from "./components/CardModal";
@@ -22,6 +23,7 @@ export type MessageType = {
   treeData?: any;
   listData?: any;
   tableData?: any;
+  isMap?: boolean;
 };
 
 const App: React.FC = () => {
@@ -29,14 +31,14 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isCardModalOpen, setIsCardModalOpen] = useState<boolean>(false);
-
+  const [isMapModalOpen, setIsMapModalOpen] = useState<boolean>(false);
   const handleModalClose = () => {
     setIsModalOpen(false);
     const modalMessage: MessageType = {
       text: "",
       sender: "gpt",
       isModal: true,
-      isTree: false,
+      isTree: false
     };
     setMessages((prevMessages) => [...prevMessages, modalMessage]);
   };
@@ -50,7 +52,7 @@ const App: React.FC = () => {
     const userMessage: MessageType = {
       text: message,
       sender: "user",
-      isText: true,
+      isText: true
     };
     setMessages([...messages, userMessage]);
     const messageType = determineMessageType(message);
@@ -58,7 +60,7 @@ const App: React.FC = () => {
       const gptMessage: MessageType = {
         text: "adds 25 new local markets (16M consumers)",
         sender: "gpt",
-        isText: true,
+        isText: true
       };
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;
@@ -68,7 +70,7 @@ const App: React.FC = () => {
       const gptMessage: MessageType = {
         text: "",
         sender: "gpt",
-        isCitation: true,
+        isCitation: true
       };
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;
@@ -86,7 +88,7 @@ const App: React.FC = () => {
         text: "",
         sender: "gpt",
         isTable: true,
-        tableData: messageType.tableData,
+        tableData: messageType.tableData
       };
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;
@@ -98,7 +100,7 @@ const App: React.FC = () => {
         text: "",
         sender: "gpt",
         isChart: true,
-        chartData: messageType.chartData,
+        chartData: messageType.chartData
       };
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;
@@ -108,7 +110,7 @@ const App: React.FC = () => {
         text: "",
         sender: "gpt",
         isList: true,
-        listData: messageType.listData,
+        listData: messageType.listData
       };
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;
@@ -117,8 +119,18 @@ const App: React.FC = () => {
       const gptMessage: MessageType = {
         text: "",
         sender: "gpt",
-        isTree: true,
+        isTree: true
       };
+      setMessages((prevMessages) => [...prevMessages, gptMessage]);
+      return;
+    }
+    if (message.toLowerCase().includes("map")) {
+      const gptMessage: MessageType = {
+        text: "",
+        sender: "gpt",
+        isMap: true
+      };
+      setIsMapModalOpen(true);
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;
     }
@@ -153,6 +165,7 @@ const App: React.FC = () => {
           onClose={handleCardModalClose}
           imagePath="/Group3.png"
         />
+        <MapModal isOpen={isMapModalOpen} />
       </div>
     </div>
   );

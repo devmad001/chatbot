@@ -5,7 +5,7 @@ import Modal from "./powerModal";
 import TreeDivisionDiagram from "./Tree";
 import ConsolidationTable from "./ConsolidationTable";
 import CitationCard from "./CitationCard";
-
+import Map from "./MapModal";
 type MessageProps = {
   text: string;
   sender: "user" | "gpt";
@@ -21,6 +21,7 @@ type MessageProps = {
   tableData?: any;
   isText?: boolean;
   onCitationLinkClick?: () => void;
+  isMap?: boolean;
 };
 
 const Message: React.FC<MessageProps> = ({
@@ -38,6 +39,7 @@ const Message: React.FC<MessageProps> = ({
   tableData,
   isText,
   onCitationLinkClick,
+  isMap
 }) => {
   console.log(text);
   return (
@@ -70,6 +72,7 @@ const Message: React.FC<MessageProps> = ({
             onLinkClick={onCitationLinkClick}
           />
         )}
+        {/* {isMap && <Map />} */}
       </div>
     </div>
   );
