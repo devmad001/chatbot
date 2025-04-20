@@ -16,6 +16,7 @@ type MessageType = {
   isTree?: boolean;
   isTable?: boolean;
   isCitation?: boolean;
+  chartData?: any;
 };
 
 const App: React.FC = () => {
@@ -74,10 +75,38 @@ const App: React.FC = () => {
 
     // Check if user asked for a chart
     if (message.toLowerCase().includes("chart")) {
+      const chartData = {
+        data: {
+          labels: [
+            "UBS/Credit",
+            "Julius Bär",
+            "EFG/BSI",
+            "Rathbones",
+            "Rothschild",
+            "ABN Amro",
+            "RBC/City National",
+          ],
+          datasets: [
+            {
+              label: "Synergy %",
+              data: [54, 35, 22, 18, 14, 13, 13],
+            },
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+            text: "Total synergies vs. precedent median",
+          },
+          baseline: 18,
+        },
+      };
+
       const gptMessage: MessageType = {
         text: "Here is the chart you requested:",
         sender: "gpt",
         isChart: true,
+        chartData: chartData,
       };
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;

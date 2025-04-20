@@ -12,6 +12,7 @@ type MessageType = {
   isTree?: boolean;
   isTable?: boolean;
   isCitation?: boolean;
+  chartData?: any;
 };
 
 type ChatWindowProps = {
@@ -66,6 +67,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
               isTree={msg.isTree}
               isTable={msg.isTable}
               isCitation={msg.isCitation}
+              chartData={msg.chartData}
               onCitationLinkClick={onCitationLinkClick}
             />
           </CSSTransition>
