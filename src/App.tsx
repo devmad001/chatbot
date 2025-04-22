@@ -64,7 +64,7 @@ const App: React.FC = () => {
       isText: true
     };
     setMessages([...messages, userMessage]);
-    const messageType = determineMessageType(message);
+    const messageType = await determineMessageType(message);
     if (messageType.isText) {
       const gptMessage: MessageType = {
         text: "adds 25 new local markets (16M consumers)",
@@ -128,7 +128,8 @@ const App: React.FC = () => {
       const gptMessage: MessageType = {
         text: "",
         sender: "gpt",
-        isTree: true
+        isTree: true,
+        treeData: messageType.treeData
       };
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
       return;
@@ -138,6 +139,7 @@ const App: React.FC = () => {
         text: "",
         sender: "gpt",
         isMap: true
+        // treeData: messageType.treeData
       };
       setIsMapModalOpen(true);
       // setMessages((prevMessages) => [...prevMessages, gptMessage]);
