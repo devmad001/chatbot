@@ -44,7 +44,7 @@ const Message: React.FC<MessageProps> = ({
   isText,
   textData,
   onCitationLinkClick,
-  isMap
+  isMap,
 }) => {
   console.log(text);
   return (
@@ -59,7 +59,7 @@ const Message: React.FC<MessageProps> = ({
         <p className="text-[18px] font-[400]">{text}</p>
       </div>
 
-      <div className="flex flex-col px-3 py-1 justify-center w-1/2 gap-4">
+      <div className="flex flex-col px-3 py-1 justify-center w-2/3 gap-4">
         {isChart && (
           <VerticalBarChart data={chartData.data} options={chartData.options} />
         )}
