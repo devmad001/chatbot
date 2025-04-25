@@ -25,6 +25,8 @@ type MessageProps = {
   isText?: boolean;
   onCitationLinkClick?: () => void;
   isMap?: boolean;
+  mapData?: any;
+  handleMapModalOpen?: () => void;
 };
 
 const Message: React.FC<MessageProps> = ({
@@ -45,6 +47,8 @@ const Message: React.FC<MessageProps> = ({
   textData,
   onCitationLinkClick,
   isMap,
+  mapData,
+  handleMapModalOpen
 }) => {
   console.log(text);
   return (
@@ -81,7 +85,14 @@ const Message: React.FC<MessageProps> = ({
             onLinkClick={onCitationLinkClick}
           />
         )}
-        {isMap && <Map imageUrl="/MapLeft.png" title="Detail Map" />}
+        {isMap && (
+          <Map
+            imageUrl="/MapLeft.png"
+            title="Detail Map"
+            mapData={mapData}
+            handleMapModalOpen={handleMapModalOpen}
+          />
+        )}
       </div>
     </div>
   );

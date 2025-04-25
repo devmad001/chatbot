@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./Tree.css"; // Import the CSS file for styling
+import html2canvas from "html2canvas";
+import domtoimage from "dom-to-image-more";
 
 interface MapModalProps {
   isOpen: boolean;
@@ -14,26 +16,6 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, data }) => {
   // const [mapData, setMapData] = useState<any>({}});
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<L.Map | null>(null);
-
-  // useEffect(() => {
-  //   setMapData(data);
-  // }, [data]);
-
-  // const data = {
-  //   type: "map",
-  //   markers: [
-  //     { lat: 48.14, lng: 11.58, label: "Buyer branch", color: "blue" },
-  //     { lat: 49.21, lng: 11.62, label: "Target branch", color: "red" },
-  //     { lat: 47.21, lng: 11.82, label: "Target branch1", color: "blue" },
-  //     { lat: 45.21, lng: 12.42, label: "Target branch2", color: "red" },
-  //     { lat: 46.21, lng: 13.62, label: "Target branch3", color: "blue" },
-  //     { lat: 45.71, lng: 11.62, label: "Target branch4", color: "red" }
-  //   ],
-  //   options: {
-  //     zoom: 6,
-  //     tileProvider: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  //   }
-  // };
 
   useEffect(() => {
     console.log(data);
@@ -69,11 +51,44 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, data }) => {
     };
   }, [data]);
 
+  const handleDownload = async () => {
+    if (mapRef.current && mapInstance.current) {
+      try {
+        // Wait for tiles to load
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        // Get the map container element
+        const mapContainer = mapRef.current;
+
+        // Use dom-to-image to capture the map
+        const dataUrl = await domtoimage.toPng(mapContainer, {
+          quality: 1,
+          bgcolor: "#fff",
+          style: {
+            transform: "scale(1)"
+          },
+          filter: (node: HTMLElement) => {
+            // Keep all elements including map tiles and markers
+            return true;
+          }
+        });
+
+        // Create download link
+        const link = document.createElement("a");
+        link.download = "map.png";
+        link.href = dataUrl;
+        link.click();
+      } catch (error) {
+        console.error("Error downloading map:", error);
+      }
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300">
-      <div className="relative w-1/2 p-4 bg-white rounded-[60px] shadow-lg">
+      <div className="relative w-[50vw] p-4 bg-white rounded-[60px] shadow-lg">
         <div
           ref={mapRef}
           className="w-full h-[500px] rounded-[60px] shadow-md"
@@ -81,27 +96,42 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, data }) => {
         <div className="absolute bottom-0 left-0 right-0 bg-white py-4 flex flex-col items-center rounded-b-[40px]">
           <div className="w-full flex flex-col">
             <div className="w-full h-4 bg-gradient-to-r from-red-500 to-green-500 rounded-full relative">
-              <div className="absolute top-0 left-[70%] w-4 h-4 bg-white border border-gray-300 rounded-full shadow-md"></div>
+              <div
+                className={`absolute left-[70%] top-0 w-4 h-4 bg-white border border-gray-300 rounded-full shadow-md`}
+                // style={{
+                //   left: `${data.legend.slider.percent * 100}%`
+                // }}
+              ></div>
             </div>
             <div className="flex justify-between gap-4">
               <div className="text-[#ef4444]">Low</div>
               <div className="text-center">
                 Distribution reach increase based on locations (consumers, %)
                 110%
+                {/* {data.legend.slider.text} {data.legend.slider.percent * 100}% */}
               </div>
               <div className="text-[#22c55e]">High</div>
             </div>
           </div>
           <div className="w-full flex justify-center items-center my-2">
             <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
+              {data.legend.items.map((item: any) => (
+                <div className="flex items-center space-x-2">
+                  <div
+                    className={`w-4 h-4  rounded-full`}
+                    style={{ backgroundColor: item.color }}
+                  ></div>
+                  <span className="text-sm">{item.label}</span>
+                </div>
+              ))}
+              {/* <div className="flex items-center space-x-2">
                 <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
                 <span className="text-sm">Backer Goertz</span>
-              </div>
-              <div className="flex items-center space-x-2">
+              </div> */}
+              {/* <div className="flex items-center space-x-2">
                 <div className="w-4 h-4 bg-red-500 rounded-full"></div>
                 <span className="text-sm">Schafer Dein Backer</span>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="flex items-center space-x-4 mt-2 rounded-full bg-white border border-gray-300 shadow-md px-4 py-2">
@@ -112,7 +142,10 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, data }) => {
               Close
             </button>
             <div className="h-6 w-px bg-gray-300"></div>
-            <button className="text-gray-600 text-[18px] font-[400] hover:text-gray-900 transition-colors   flex items-center">
+            <button
+              className="text-gray-600 text-[18px] font-[400] hover:text-gray-900 transition-colors   flex items-center"
+              onClick={handleDownload}
+            >
               Download
               <div className="w-3"></div>
               <svg
