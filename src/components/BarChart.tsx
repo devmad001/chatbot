@@ -68,7 +68,7 @@ const VerticalBarChart: React.FC<BarChartProps> = ({ data, options }) => {
 
     return (
       <g transform={`translate(${x},${y})`}>
-        <foreignObject x={-30} y={-5} width={60} height={50}>
+        <foreignObject x={-30} y={-5} width={60} height={90}>
           <div
             style={{
               width: "100%",
@@ -81,7 +81,7 @@ const VerticalBarChart: React.FC<BarChartProps> = ({ data, options }) => {
               fontSize: "14px",
               color: "#666",
               wordBreak: "break-all",
-              lineHeight: "1",
+              lineHeight: "1.3",
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
