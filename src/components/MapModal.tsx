@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import "./Tree.css"; // Import the CSS file for styling
 import html2canvas from "html2canvas";
 import domtoimage from "dom-to-image-more";
+import countryGeoJson from './countries.geo.json'; // Download and place a GeoJSON file in your project
 
 interface MapModalProps {
   isOpen: boolean;
@@ -12,13 +13,29 @@ interface MapModalProps {
   // imagePath: string;
 }
 
+interface FeatureCollection {
+  features: any[];
+}
+
 const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, data }) => {
   // const [mapData, setMapData] = useState<any>({}});
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<L.Map | null>(null);
 
+  // Place this inside your component, but outside useEffect
+  function getCountryColor(countryName: string, countryMarkerCounts: Record<string, { red: number; blue: number }>) {
+    const counts = countryMarkerCounts[countryName];
+    if (!counts) return "#fff";
+    const total = counts.red + counts.blue;
+    if (total === 0) return "#fff";
+    const ratio = counts.red / total;
+    const r = Math.round(255 * ratio);
+    const g = 0;
+    const b = Math.round(255 * (1 - ratio));
+    return `rgb(${r},${g},${b})`;
+  }
+
   useEffect(() => {
-    console.log(data);
     if (mapRef.current && !mapInstance.current) {
       mapInstance.current = L.map(mapRef.current, {
         zoomControl: false,
@@ -41,6 +58,40 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, data }) => {
 
         circle.bindPopup(marker.label);
       });
+
+      // 1. Count red and blue markers per country
+      const countryMarkerCounts: Record<string, { red: number; blue: number }> = {};
+
+      const features = (countryGeoJson as any).features;
+      features.forEach((feature: any) => {
+        const countryLayer = L.geoJSON(feature);
+        const countryName = feature.properties.name;
+        countryMarkerCounts[countryName] = { red: 0, blue: 0 };
+
+        data.markers.forEach((marker: any) => {
+          const latlng = L.latLng(marker.lat, marker.lng);
+          if (countryLayer.getBounds().contains(latlng)) {
+            if (marker.color === "red" || marker.color === "#ff0000") {
+              countryMarkerCounts[countryName].red += 1;
+            } else if (marker.color === "blue" || marker.color === "#0000ff") {
+              countryMarkerCounts[countryName].blue += 1;
+            }
+          }
+        });
+      });
+
+      // 3. Add highlighted countries with proportional color
+      L.geoJSON(countryGeoJson as any, {
+        style: (feature) => {
+          const countryName = feature?.properties?.name;
+          return {
+            color: "#888",
+            weight: 1,
+            fillColor: getCountryColor(countryName, countryMarkerCounts),
+            fillOpacity: 0.4,
+          };
+        },
+      }).addTo(mapInstance.current);
     }
 
     return () => {
@@ -94,7 +145,7 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, data }) => {
           className="w-full h-[500px] rounded-[60px] shadow-md"
         ></div>
         <div className="absolute bottom-0 left-0 right-0 bg-white py-4 flex flex-col items-center rounded-b-[40px]">
-          <div className="w-full flex flex-col">
+          {/* <div className="w-full flex flex-col">
             <div className="w-full h-4 bg-gradient-to-r from-red-500 to-green-500 rounded-full relative">
               <div
                 className={`absolute left-[70%] top-0 w-4 h-4 bg-white border border-gray-300 rounded-full shadow-md`}
@@ -108,11 +159,10 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, data }) => {
               <div className="text-center">
                 Distribution reach increase based on locations (consumers, %)
                 110%
-                {/* {data.legend.slider.text} {data.legend.slider.percent * 100}% */}
               </div>
               <div className="text-[#22c55e]">High</div>
             </div>
-          </div>
+          </div> */}
           <div className="w-full flex justify-center items-center my-2">
             <div className="flex items-center space-x-4">
               {data.legend.items.map((item: any) => (
