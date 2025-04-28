@@ -61,12 +61,14 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose, data }) => {
 
         L.geoJSON(countryGeoJson as any, {
           style: (feature) => {
-            const countryCode = feature?.properties["ISO3166-1-Alpha-2"];
-            if (highlightMap[countryCode]) {
+            const countryCode1 = feature?.properties["ISO3166-1-Alpha-2"];
+            const countryCode2 = feature?.properties["ISO3166-1-Alpha-3"];
+            if (highlightMap[countryCode1] || highlightMap[countryCode2]) {
               return {
                 color: "#888",
                 weight: 1,
-                fillColor: highlightMap[countryCode],
+                fillColor:
+                  highlightMap[countryCode1] || highlightMap[countryCode2],
                 fillOpacity: 0.9
               };
             }
